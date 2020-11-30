@@ -31,7 +31,7 @@ func main() {
 	api.Use()
 	{
 		api.GET("/users", handler.GetAllEmployee)
-		api.PUT("/update/:id", handler.UpdateEmployee)
+		api.PUT("/update", handler.UpdateEmployee)
 		api.DELETE("/delete/:id", handler.DeleteUser)
 		api.POST("/user", handler.AddUser)
 	}
