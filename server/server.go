@@ -1,24 +1,26 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/hyperxpizza/vue-go-crud/server/database"
 	"github.com/hyperxpizza/vue-go-crud/server/handler"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	port := os.Getenv("SERVER_PORT")
-	if port == "" {
-		port = ":8081"
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
 
-	user := "pizza"
-	password := "Wojtekfoka1"
-	dbname := "employeesdatabase"
-
+	port := os.Getenv("SERVER_PORT")
+	user := os.Getenv("POSTGRES_USER")
+	password := os.Getenv("POSTGRES_PASSWORD")
+	dbname := os.Getenv("POSTGRES_DBNAME")
 	database.InitDB(user, password, dbname)
 
 	router := gin.Default()
