@@ -81,7 +81,29 @@ func UpdateEmployee(c *gin.Context) {
 }
 
 func DeleteUser(c *gin.Context) {
+	id := c.Param("id")
 
+	stmt, err := database.Db.Prepare(`DELETE FROM employees WHERE id = $1`)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+
+		return
+	}
+
+	_, err = stmt.Exec(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Employee with id: " + id + " deleted.",
+	})
 }
 
 func AddUser(c *gin.Context) {
