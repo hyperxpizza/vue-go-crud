@@ -57,5 +57,34 @@ func DeleteUser(c *gin.Context) {
 }
 
 func AddUser(c *gin.Context) {
+	var newEmployee Employee
+
+	if err := c.ShouldBindJSON(&newEmployee); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+
+		return
+	}
+
+	stmt, err := database.Db.Prepare(`INSERT INTO employees VALUES($1, $2, $3)`)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+
+		return
+	}
+
+	_, err = stmt.Exec(newEmployee.ID, newEmployee.Name, newEmployee.Email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, &newEmployee)
 
 }
