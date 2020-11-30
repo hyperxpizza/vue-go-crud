@@ -4,9 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+
+	//Postgresql driver
+	_ "github.com/lib/pq"
 )
 
-var db *sql.DB
+var Db *sql.DB
 
 const (
 	host = "localhost"
@@ -30,6 +33,6 @@ func InitDB(user, password, dbname string) {
 		log.Fatal(err)
 	}
 
-	db = database
+	Db = database
 	log.Println("Connected to the database")
 }

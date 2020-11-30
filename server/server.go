@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/hyperxpizza/vue-go-crud/server/database"
 	"github.com/hyperxpizza/vue-go-crud/server/handler"
 )
 
@@ -13,6 +14,12 @@ func main() {
 	if port == "" {
 		port = ":8081"
 	}
+
+	user := "pizza"
+	password := "Wojtekfoka1"
+	dbname := "employeesdatabase"
+
+	database.InitDB(user, password, dbname)
 
 	router := gin.Default()
 
