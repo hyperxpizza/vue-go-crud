@@ -26,6 +26,9 @@ export default {
             employees :[]
         }
     },
+    mounted(){
+        this.getEmployees()
+    },
     methods: {
         addEmployee(employee) {
             const lastId =
@@ -47,7 +50,16 @@ export default {
             this.employees = this.employees.map(employee =>
                 employee.id === id ? updatedEmployee : employee
             )
-        }
+        },
+        async getEmployees(){
+            try {
+                const response = await fetch('http://localhost:8081/api/users')
+                const data = await response.json()
+                this.employees = data
+            } catch (error){
+                console.error(error)
+            }
+        },
     },
 }
 </script>

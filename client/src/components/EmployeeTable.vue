@@ -43,9 +43,6 @@ export default {
             editing: null,
         }
     },
-    mounted(){
-        this.getEmployees()
-    },
     methods: {
         editMode(employee) {
             this.cachedEmployee = Object.assign({}, employee)
@@ -60,15 +57,6 @@ export default {
             this.$emit('edit:employee', employee.id, employee)
             this.editing = null
         },
-        async getEmployees(){
-            try {
-                const response = await fetch('https://jsonplaceholder.typicode.com/users')
-                const data = await response.json()
-                this.employees = data
-            } catch (error){
-                console.error(error)
-            }
-        }
     }
 }
 </script>
